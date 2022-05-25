@@ -304,7 +304,15 @@ public class gui extends javax.swing.JFrame {
             new String [] {
                 "Name", "Quantity", "Price"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         shopTableScrollPane.setViewportView(shopItemsTable);
 
         shopBuyItemBtn.setText("Buy Item");
@@ -314,10 +322,13 @@ public class gui extends javax.swing.JFrame {
             }
         });
 
+        shopBuyItemBox.setBackground(new java.awt.Color(204, 204, 204));
+
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel1.setText("Please Fill out the Details Below:");
 
         shopItemBoxLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        shopItemBoxLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         shopItemBoxLabel2.setText("Enter the quantity of item you are purchasing:");
 
         shopItemBoxAddToCartBtn.setText("Add Item To Cart");
@@ -338,35 +349,39 @@ public class gui extends javax.swing.JFrame {
         shopBuyItemBox.setLayout(shopBuyItemBoxLayout);
         shopBuyItemBoxLayout.setHorizontalGroup(
             shopBuyItemBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, shopBuyItemBoxLayout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
+            .addGroup(shopBuyItemBoxLayout.createSequentialGroup()
                 .addGroup(shopBuyItemBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(shopBuyItemBoxLayout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(shopItemBoxQtyField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(shopBuyItemBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(shopBuyItemBoxLayout.createSequentialGroup()
-                            .addComponent(shopItemBoxAddToCartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(26, 26, 26)
-                            .addComponent(shopItemBoxCancelBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(shopItemBoxLabel2, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addGap(85, 85, 85))
+                        .addGap(260, 260, 260)
+                        .addComponent(shopItemBoxAddToCartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(shopBuyItemBoxLayout.createSequentialGroup()
+                        .addGap(198, 198, 198)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(shopBuyItemBoxLayout.createSequentialGroup()
+                        .addGap(233, 233, 233)
+                        .addComponent(shopItemBoxQtyField, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(shopBuyItemBoxLayout.createSequentialGroup()
+                        .addGap(270, 270, 270)
+                        .addComponent(shopItemBoxCancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(shopBuyItemBoxLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(shopItemBoxLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         shopBuyItemBoxLayout.setVerticalGroup(
             shopBuyItemBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(shopBuyItemBoxLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(83, 83, 83)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(shopItemBoxLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(shopItemBoxQtyField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(shopItemBoxAddToCartBtn)
                 .addGap(18, 18, 18)
-                .addGroup(shopBuyItemBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(shopItemBoxAddToCartBtn)
-                    .addComponent(shopItemBoxCancelBtn))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addComponent(shopItemBoxCancelBtn)
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout userTabShopPanelLayout = new javax.swing.GroupLayout(userTabShopPanel);
@@ -376,21 +391,21 @@ public class gui extends javax.swing.JFrame {
             .addGroup(userTabShopPanelLayout.createSequentialGroup()
                 .addGap(186, 186, 186)
                 .addComponent(Heading, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
-                        .addComponent(shopTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(252, 252, 252))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
                         .addComponent(shopBuyItemBtn)
-                        .addGap(431, 431, 431))))
+                        .addGap(431, 431, 431))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
+                        .addComponent(shopTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67))))
             .addGroup(userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
-                    .addContainerGap(248, Short.MAX_VALUE)
+                    .addContainerGap(154, Short.MAX_VALUE)
                     .addComponent(shopBuyItemBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(253, Short.MAX_VALUE)))
+                    .addContainerGap(157, Short.MAX_VALUE)))
         );
         userTabShopPanelLayout.setVerticalGroup(
             userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,14 +414,14 @@ public class gui extends javax.swing.JFrame {
                 .addComponent(Heading, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(shopTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(shopBuyItemBtn)
-                .addGap(28, 28, 28))
+                .addContainerGap(16, Short.MAX_VALUE))
             .addGroup(userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
-                    .addContainerGap(75, Short.MAX_VALUE)
+                    .addContainerGap(130, Short.MAX_VALUE)
                     .addComponent(shopBuyItemBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(85, Short.MAX_VALUE)))
+                    .addContainerGap(139, Short.MAX_VALUE)))
         );
 
         userTabPanel.add(userTabShopPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 0, 950, -1));
@@ -542,7 +557,7 @@ public class gui extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Sorry only " + shopItemQty + " " + shopItemName + "s remaining");
             } else {
                 
-                Cart.addToCart(model , table , userSelectedQty , shopItemQty);
+                Shop.addToCart(model , table , userSelectedQty , shopItemQty);
                 this.shopBuyItemBox.setVisible(false);
                 this.shopTableScrollPane.setVisible(true);
                 this.shopBuyItemBtn.setVisible(true);
