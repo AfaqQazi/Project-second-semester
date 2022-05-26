@@ -302,6 +302,11 @@ public class gui extends javax.swing.JFrame {
         jScrollPane2.setViewportView(userCartTable);
 
         userCartCheckoutBtn.setText("Check Out Cart");
+        userCartCheckoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userCartCheckoutBtnActionPerformed(evt);
+            }
+        });
 
         userCartClearCartBtn.setText("Clear Cart");
         userCartClearCartBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -562,13 +567,15 @@ public class gui extends javax.swing.JFrame {
 
     private void userFormLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userFormLoginBtnActionPerformed
         // TODO add your handling code here:
+        
+        DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel();
+        Cart.clearCart(model);
+        
         Account.clearErrors(this.userFormEmptyError,this.userFormAlreadRegisteredError, this.userFormIncorrectError , this.userFormRegisteredMsg);        
         String username = this.userFormUsernameField.getText();
         String password = this.userFormPasswordField.getText();
         Account.loginUser(username , password , this.userFormEmptyError , this.userFormIncorrectError);
         // clear cart of previous user
-        DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel();
-        Cart.clearCart(model);
         Account.show(this.userFormPanel , this.userLogoutBtn);
     }//GEN-LAST:event_userFormLoginBtnActionPerformed
 
@@ -577,7 +584,6 @@ public class gui extends javax.swing.JFrame {
         Account.logoutUser();
         // clear cart of previous user
         DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel();
-        Cart.clearCart(model);
         Account.show(this.userFormPanel , this.userLogoutBtn);
         
     }//GEN-LAST:event_userLogoutBtnActionPerformed
@@ -631,9 +637,15 @@ public class gui extends javax.swing.JFrame {
             userSelectedQty = parseInt(this.shopItemBoxQtyField.getText());
             shouldAddToCart = true;
         } catch(NumberFormatException n ) {
-            JOptionPane.showMessageDialog(null, "Please Enter a numeric value");
+            JOptionPane.showMessageDialog(null, "Please Enter a positive numeric value");
             shouldAddToCart = false;
         } 
+        
+        // check for negative number
+        if (userSelectedQty < 0) {
+            shouldAddToCart = false;
+            JOptionPane.showMessageDialog(null, "Please Enter a positive numeric value");
+        }
         
         if (shouldAddToCart) {
             if (userSelectedQty > shopItemQty) {
@@ -665,6 +677,11 @@ public class gui extends javax.swing.JFrame {
         DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel(); 
         Cart.clearCart(model);
     }//GEN-LAST:event_userCartClearCartBtnActionPerformed
+
+    private void userCartCheckoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userCartCheckoutBtnActionPerformed
+        // TODO add your handling code here:
+        Cart.checkout();
+    }//GEN-LAST:event_userCartCheckoutBtnActionPerformed
     
     // USER ACTION FUNCTON END
     
@@ -715,7 +732,6 @@ public class gui extends javax.swing.JFrame {
     private javax.swing.JPanel adminTabPanel;
     private javax.swing.JPanel adminTabSidePanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel shopBuyItemBox;
     private javax.swing.JButton shopBuyItemBtn;

@@ -121,7 +121,6 @@ public static void loginAdmin(String username , String password , JLabel e1 , JL
                     }
                 }
                 if (username.equals(dbUsername) && password.equals(dbPassword)) {
-                    System.out.println("creating user object");
                     return true;
                 }
             }

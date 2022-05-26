@@ -1,2 +1,2 @@
-apples:20:1.0
-bananas:15:2.25
+apples:380:1.0
+bananas:500:2.25

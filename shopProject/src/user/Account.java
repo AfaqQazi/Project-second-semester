@@ -110,7 +110,6 @@ public class Account {
                     }
                 }
                 if (username.equals(dbUsername) && password.equals(dbPassword)) {
-                    System.out.println("creating user object");
                     return true;
                 }
             }

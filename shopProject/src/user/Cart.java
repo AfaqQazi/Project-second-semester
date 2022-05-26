@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -45,8 +46,19 @@ public class Cart {
     
     public static void clearCart(DefaultTableModel model) {
         // put items back into inventory
-        if (model.getRowCount() !=0 ) {
-            putItemsBack(model);
+        int currentRowsInCart = 0;
+        try {
+            File getCart = new File("database/cart.txt");
+            Scanner cartScanner = new Scanner(getCart);
+            while(cartScanner.hasNextLine()) {
+                cartScanner.nextLine();
+                currentRowsInCart++;
+            }
+        } catch(IOException e) {
+            System.out.println("cannot read from cart");
+        }
+        if (currentRowsInCart > 0 ) {
+            putItemsBack(model , currentRowsInCart);
         }
         
         
@@ -61,17 +73,31 @@ public class Cart {
          model.setRowCount(0);
     }
     
-    private static void putItemsBack(DefaultTableModel model) {
-
-        String[][] cartClientArr = new String[model.getRowCount()][2];
+    private static void putItemsBack(DefaultTableModel model , int rowsInCart) {
+        String[][] cartClientArr = new String[rowsInCart][2];
+        try {
+            File myCart = new File("database/cart.txt");
+            Scanner cartScanner = new Scanner(myCart);
+            for (int i = 0; cartScanner.hasNextLine(); i++) {
+                String[] line = cartScanner.nextLine().split(":");
+                String name =line[0];
+                String qty = line[1];
+                cartClientArr[i][0] = name;
+                cartClientArr[i][1] = qty;
+            }
+        } catch(IOException e) {
+            System.out.println("Cannot access cart file for reading");
+        }
+        
+        /*
+        String[][] cartClientArr = new String[rowsInCart][2];
         for (int i = 0; i < cartClientArr.length; i++) {
             String name = model.getValueAt(i, 0).toString();
             String qty = (model.getValueAt(i,1).toString());
             cartClientArr[i][0] = name;
             cartClientArr[i][1] = qty;
         } 
-        
-        
+        */
         // count inventory file rows
         int inventoryFileRows = 0;
         try {
@@ -135,5 +161,16 @@ public class Cart {
             System.out.println("Sometghing went wrong writing to the inventory file");
         }
         
+    }
+    
+    public static void checkout() {
+        double input = -1;
+            try {
+                input = Double.parseDouble(JOptionPane.showInputDialog("Enter Your Balance Amount:"));
+            } catch(NumberFormatException e) {
+                JOptionPane.showMessageDialog(null , "Please enter a positive numeric value");
+            } catch(NullPointerException n) {
+                JOptionPane.showMessageDialog(null , "Please enter a positive numeric value");
+            }
     }
 }
