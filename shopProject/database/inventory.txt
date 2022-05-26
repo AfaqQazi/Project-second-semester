@@ -1,1 +1,2 @@
-Samsung 50Watt Charger:0:20.0
+apples:20:1.0
+bananas:15:2.25

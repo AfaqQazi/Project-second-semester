@@ -58,6 +58,12 @@ public class gui extends javax.swing.JFrame {
         userFormIncorrectError = new javax.swing.JLabel();
         userFormRegisteredMsg = new javax.swing.JLabel();
         userTabCartPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        userCartTable = new javax.swing.JTable();
+        userCartCheckoutBtn = new javax.swing.JButton();
+        userCartClearCartBtn = new javax.swing.JButton();
+        userCartHeading = new javax.swing.JLabel();
+        userCartTotalLabel = new javax.swing.JLabel();
         userTabShopPanel = new javax.swing.JPanel();
         Heading = new javax.swing.JLabel();
         shopTableScrollPane = new javax.swing.JScrollPane();
@@ -277,15 +283,80 @@ public class gui extends javax.swing.JFrame {
 
         userTabCartPanel.setBackground(new java.awt.Color(204, 204, 204));
 
+        userCartTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Quantity", "Total Item Price"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(userCartTable);
+
+        userCartCheckoutBtn.setText("Check Out Cart");
+
+        userCartClearCartBtn.setText("Clear Cart");
+        userCartClearCartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userCartClearCartBtnActionPerformed(evt);
+            }
+        });
+
+        userCartHeading.setBackground(new java.awt.Color(0, 0, 0));
+        userCartHeading.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        userCartHeading.setForeground(new java.awt.Color(0, 0, 0));
+        userCartHeading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userCartHeading.setText("USER CART");
+
+        userCartTotalLabel.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        userCartTotalLabel.setForeground(new java.awt.Color(0, 0, 0));
+        userCartTotalLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userCartTotalLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
         javax.swing.GroupLayout userTabCartPanelLayout = new javax.swing.GroupLayout(userTabCartPanel);
         userTabCartPanel.setLayout(userTabCartPanelLayout);
         userTabCartPanelLayout.setHorizontalGroup(
             userTabCartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 950, Short.MAX_VALUE)
+            .addGroup(userTabCartPanelLayout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addGroup(userTabCartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(userCartHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(userTabCartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(userTabCartPanelLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(userCartTotalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(userTabCartPanelLayout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addGroup(userTabCartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(userCartCheckoutBtn)
+                            .addComponent(userCartClearCartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         userTabCartPanelLayout.setVerticalGroup(
             userTabCartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
+            .addGroup(userTabCartPanelLayout.createSequentialGroup()
+                .addGap(245, 245, 245)
+                .addComponent(userCartCheckoutBtn)
+                .addGap(18, 18, 18)
+                .addComponent(userCartClearCartBtn)
+                .addGap(50, 50, 50)
+                .addComponent(userCartTotalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(userTabCartPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(userCartHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         userTabPanel.add(userTabCartPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 0, 950, -1));
@@ -467,9 +538,14 @@ public class gui extends javax.swing.JFrame {
     private void UserTabCartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserTabCartBtnActionPerformed
         // TODO add your handling code here:
         if (User.isIsLoggedIn()) {
-             this.userTabAccountPanel.setVisible(false);
+            this.userTabAccountPanel.setVisible(false);
             this.userTabCartPanel.setVisible(true);
             this.userTabShopPanel.setVisible(false);    
+            this.userCartHeading.setText(User.getUsername().toUpperCase() + " CART:");
+            // load cart items
+            DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel();
+            Cart.loadItems(model);
+            this.userCartTotalLabel.setText("Total Price: " + Cart.getTotalPrice(model));
         } else {
            JOptionPane.showMessageDialog(null, "User must be logged in in order to view Cart");
         }
@@ -490,13 +566,20 @@ public class gui extends javax.swing.JFrame {
         String username = this.userFormUsernameField.getText();
         String password = this.userFormPasswordField.getText();
         Account.loginUser(username , password , this.userFormEmptyError , this.userFormIncorrectError);
+        // clear cart of previous user
+        DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel();
+        Cart.clearCart(model);
         Account.show(this.userFormPanel , this.userLogoutBtn);
     }//GEN-LAST:event_userFormLoginBtnActionPerformed
 
     private void userLogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userLogoutBtnActionPerformed
         // TODO add your handling code here:
         Account.logoutUser();
+        // clear cart of previous user
+        DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel();
+        Cart.clearCart(model);
         Account.show(this.userFormPanel , this.userLogoutBtn);
+        
     }//GEN-LAST:event_userLogoutBtnActionPerformed
 
     private void userTabShopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTabShopBtnActionPerformed
@@ -576,6 +659,12 @@ public class gui extends javax.swing.JFrame {
          this.shopBuyItemBtn.setVisible(true);
          this.shopItemBoxQtyField.setText("");
     }//GEN-LAST:event_shopItemBoxCancelBtnActionPerformed
+
+    private void userCartClearCartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userCartClearCartBtnActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel(); 
+        Cart.clearCart(model);
+    }//GEN-LAST:event_userCartClearCartBtnActionPerformed
     
     // USER ACTION FUNCTON END
     
@@ -626,6 +715,8 @@ public class gui extends javax.swing.JFrame {
     private javax.swing.JPanel adminTabPanel;
     private javax.swing.JPanel adminTabSidePanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel shopBuyItemBox;
     private javax.swing.JButton shopBuyItemBtn;
     private javax.swing.JButton shopItemBoxAddToCartBtn;
@@ -634,6 +725,11 @@ public class gui extends javax.swing.JFrame {
     private javax.swing.JTextField shopItemBoxQtyField;
     private javax.swing.JTable shopItemsTable;
     private javax.swing.JScrollPane shopTableScrollPane;
+    private javax.swing.JButton userCartCheckoutBtn;
+    private javax.swing.JButton userCartClearCartBtn;
+    private javax.swing.JLabel userCartHeading;
+    private javax.swing.JTable userCartTable;
+    private javax.swing.JLabel userCartTotalLabel;
     private javax.swing.JLabel userFormAlreadRegisteredError;
     private javax.swing.JLabel userFormEmptyError;
     private javax.swing.JLabel userFormIncorrectError;
