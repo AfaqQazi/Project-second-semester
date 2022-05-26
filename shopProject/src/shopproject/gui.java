@@ -680,7 +680,13 @@ public class gui extends javax.swing.JFrame {
 
     private void userCartCheckoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userCartCheckoutBtnActionPerformed
         // TODO add your handling code here:
-        Cart.checkout();
+        String label = this.userCartTotalLabel.getText();
+        
+        DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel(); 
+        if (Cart.checkout(label)) {
+            // dont put back items into inventory but clear the cart model and cart file
+            Cart.clearCartOnly(model);
+        }
     }//GEN-LAST:event_userCartCheckoutBtnActionPerformed
     
     // USER ACTION FUNCTON END

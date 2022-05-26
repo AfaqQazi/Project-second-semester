@@ -1,2 +1,3 @@
-apples:380:1.0
+apples:50:1.0
 bananas:500:2.25
+Rolex Watch(Small):30:50.0

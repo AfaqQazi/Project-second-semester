@@ -163,14 +163,40 @@ public class Cart {
         
     }
     
-    public static void checkout() {
+    public static boolean checkout(String totalPriceText) {
+        boolean clearCart = false;
+        // get total price
+        double totalPrice = Double.parseDouble(totalPriceText.split(":")[1].trim());
         double input = -1;
-            try {
-                input = Double.parseDouble(JOptionPane.showInputDialog("Enter Your Balance Amount:"));
-            } catch(NumberFormatException e) {
-                JOptionPane.showMessageDialog(null , "Please enter a positive numeric value");
-            } catch(NullPointerException n) {
-                JOptionPane.showMessageDialog(null , "Please enter a positive numeric value");
-            }
+        try {
+          input = Double.parseDouble(JOptionPane.showInputDialog("Enter your bank balance:"));
+          if (input >= 0) {
+              if (input < totalPrice) {
+                JOptionPane.showMessageDialog(null, "You Don't have enough balance to purchase these items");
+              } else {
+               JOptionPane.showMessageDialog(null, "Items Purchased Successfully");
+               clearCart = true;
+              }
+          } else {
+              JOptionPane.showMessageDialog(null, "Please enter a positive numeric value");
+          }
+        } catch(NullPointerException e) {
+            System.out.println("do nothing");
+        }catch(NumberFormatException  e) {
+            JOptionPane.showMessageDialog(null, "Please enter a positive numeric value");
+        } 
+        return clearCart;
+    }
+    
+    public static void clearCartOnly(DefaultTableModel model) {
+        try {
+            FileWriter cartFile = new FileWriter("database/cart.txt");
+            cartFile.write("");
+            cartFile.close();
+        } catch(IOException e) {
+            System.out.println("Something went wrong writing to Cart");
+        }
+        
+        model.setRowCount(0);
     }
 }
