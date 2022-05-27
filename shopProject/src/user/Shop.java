@@ -11,6 +11,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import utils.UtilFuncs;
 
 public class Shop {
     public static void loadItems(DefaultTableModel model) {
@@ -52,13 +53,7 @@ public class Shop {
     }
     
     public static void updateInventory(DefaultTableModel model , JTable table) {
-        try {
-            FileWriter inventoryFile = new FileWriter("database/inventory.txt");
-            inventoryFile.write("");
-            inventoryFile.close();
-        } catch(IOException e) {
-            System.out.println("Cannot Write to inventory");
-        }
+        UtilFuncs.emptyAFile("database/inventory.txt");
         
         try {
             FileWriter inventoryFile = new FileWriter("database/inventory.txt" , true);
@@ -132,7 +127,6 @@ public class Shop {
                     SelectedItemQtyInCart = parseInt(line[1]);
                     selectedItemRowInCart = i;
                 }
-                
                 i++;
             }
             itemUpdateQty = qty + SelectedItemQtyInCart;
@@ -155,13 +149,7 @@ public class Shop {
             }
             
             // delete the cart file
-            try {
-                FileWriter cartFileWriter = new FileWriter("database/cart.txt");
-                cartFileWriter.write(""); // empty the cart. cart.delete() does not work
-                cartFileWriter.close();
-            } catch(IOException e) {
-                System.out.println("something went wrong updating item quantity in cart file");
-            }
+            UtilFuncs.emptyAFile("database/cart.txt");
             
             // append the clientCart Array on it
             try {

@@ -1,6 +1,6 @@
 
 package user;
-
+import utils.UtilFuncs;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -46,88 +46,21 @@ public class Cart {
     
     public static void clearCart(DefaultTableModel model) {
         // put items back into inventory
-        int currentRowsInCart = 0;
-        try {
-            File getCart = new File("database/cart.txt");
-            Scanner cartScanner = new Scanner(getCart);
-            while(cartScanner.hasNextLine()) {
-                cartScanner.nextLine();
-                currentRowsInCart++;
-            }
-        } catch(IOException e) {
-            System.out.println("cannot read from cart");
-        }
+        int currentRowsInCart = UtilFuncs.getNumberOfRowsInFile("database/cart.txt");
         if (currentRowsInCart > 0 ) {
             putItemsBack(model , currentRowsInCart);
         }
         
         
         // clear the client cart tabel and cart file
-        try {
-            FileWriter cartFile = new FileWriter("database/cart.txt");
-            cartFile.write("");
-            cartFile.close();
-        } catch(IOException e) {
-            System.out.println("Something went wrong writing to cart file");
-        }
-         model.setRowCount(0);
+        UtilFuncs.emptyAFile("database/cart.txt");
+        model.setRowCount(0);
     }
     
     private static void putItemsBack(DefaultTableModel model , int rowsInCart) {
-        String[][] cartClientArr = new String[rowsInCart][2];
-        try {
-            File myCart = new File("database/cart.txt");
-            Scanner cartScanner = new Scanner(myCart);
-            for (int i = 0; cartScanner.hasNextLine(); i++) {
-                String[] line = cartScanner.nextLine().split(":");
-                String name =line[0];
-                String qty = line[1];
-                cartClientArr[i][0] = name;
-                cartClientArr[i][1] = qty;
-            }
-        } catch(IOException e) {
-            System.out.println("Cannot access cart file for reading");
-        }
-        
-        /*
-        String[][] cartClientArr = new String[rowsInCart][2];
-        for (int i = 0; i < cartClientArr.length; i++) {
-            String name = model.getValueAt(i, 0).toString();
-            String qty = (model.getValueAt(i,1).toString());
-            cartClientArr[i][0] = name;
-            cartClientArr[i][1] = qty;
-        } 
-        */
-        // count inventory file rows
-        int inventoryFileRows = 0;
-        try {
-            File inventoryFile = new File("database/inventory.txt");
-            Scanner scan = new Scanner(inventoryFile);
-            while(scan.hasNextLine())  {
-                scan.nextLine();
-                inventoryFileRows++;
-            }
-        } catch(IOException e) {
-            System.out.println("Cannot access inventory file for reading");
-        }
-        
-
-        String[][] inventoryArr = new String[inventoryFileRows][3];
-        try {
-            File inventoryFile = new File("database/inventory.txt");
-            Scanner scan = new Scanner(inventoryFile);
-            for (int e = 0; scan.hasNextLine(); e++) {
-                String[] line = scan.nextLine().split(":");
-                String name = line[0];
-                String qty = line[1];
-                String price = line[2];
-                inventoryArr[e][0] = line[0];
-                inventoryArr[e][1] = line[1];
-                inventoryArr[e][2] = line[2];
-            }
-        } catch(IOException e) {
-            System.out.println("Cannot access inventory file for reading");
-        }
+        String[][] cartClientArr = UtilFuncs.getFileRowsContent("database/cart.txt" , rowsInCart);
+        int inventoryFileRows = UtilFuncs.getNumberOfRowsInFile("database/inventory.txt");
+        String[][] inventoryArr = UtilFuncs.getFileRowsContent("database/inventory.txt", inventoryFileRows);
         
         for (int k = 0; k < cartClientArr.length; k++) {
             for (int j = 0; j < inventoryArr.length; j++) {
@@ -139,17 +72,9 @@ public class Cart {
                 }            
             }
         }
-        
 
-        
         // empty inventoryAr
-        try {
-            FileWriter inventoryFile = new FileWriter("database/inventory.txt");
-            inventoryFile.write("");
-            inventoryFile.close();
-        } catch(IOException e) {
-            System.out.println("Sometghing went wrong writing to the inventory file");
-        }
+        UtilFuncs.emptyAFile("database/inventory.txt");
         // write inventoryArr to the inventory
         try {
             FileWriter inventoryFile = new FileWriter("database/inventory.txt" , true);
@@ -189,13 +114,7 @@ public class Cart {
     }
     
     public static void clearCartOnly(DefaultTableModel model) {
-        try {
-            FileWriter cartFile = new FileWriter("database/cart.txt");
-            cartFile.write("");
-            cartFile.close();
-        } catch(IOException e) {
-            System.out.println("Something went wrong writing to Cart");
-        }
+        UtilFuncs.emptyAFile("database/cart.txt");
         
         model.setRowCount(0);
     }

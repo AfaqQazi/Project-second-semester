@@ -676,16 +676,21 @@ public class gui extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel(); 
         Cart.clearCart(model);
+        this.userCartTotalLabel.setText("Total Price: " + Cart.getTotalPrice(model));
     }//GEN-LAST:event_userCartClearCartBtnActionPerformed
 
     private void userCartCheckoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userCartCheckoutBtnActionPerformed
         // TODO add your handling code here:
-        String label = this.userCartTotalLabel.getText();
-        
-        DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel(); 
-        if (Cart.checkout(label)) {
-            // dont put back items into inventory but clear the cart model and cart file
-            Cart.clearCartOnly(model);
+        if (this.userCartTable.getModel().getRowCount() > 0) {
+            String label = this.userCartTotalLabel.getText();
+
+            DefaultTableModel model =  (DefaultTableModel)this.userCartTable.getModel(); 
+            if (Cart.checkout(label)) {
+                // dont put back items into inventory but clear the cart model and cart file
+                Cart.clearCartOnly(model);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "There are no items in the cart");
         }
     }//GEN-LAST:event_userCartCheckoutBtnActionPerformed
     
