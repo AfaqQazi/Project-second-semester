@@ -787,10 +787,9 @@ public class gui extends javax.swing.JFrame {
         DefaultTableModel model =  (DefaultTableModel)this.shopItemsTable.getModel(); 
         
         TableRowSorter sorter = new TableRowSorter(model);
-        sorter.setRowFilter(RowFilter.regexFilter(this.shopSearchBar.getText()));
+        sorter.setRowFilter(RowFilter.regexFilter(this.shopSearchBar.getText() , 0));
         this.shopItemsTable.setModel(model);
         this.shopItemsTable.setRowSorter(sorter);
-//        Shop.searchItem(model , this.shopItemsTable);
     }//GEN-LAST:event_shopSearchBarKeyReleased
     
     // USER ACTION FUNCTON END
