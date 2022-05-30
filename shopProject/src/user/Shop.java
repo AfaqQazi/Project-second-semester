@@ -8,9 +8,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import utils.UtilFuncs;
 
 public class Shop {
@@ -19,18 +23,18 @@ public class Shop {
         model.setRowCount(0);
         // read  inventory file
         try {
-            String[] row;
+            String[] columns;
             File inventoryFile = new File("database/inventory.txt");
             Scanner scan = new Scanner(inventoryFile);
             while(scan.hasNextLine()) {
-                row = new String[3];
+                columns = new String[3];
                 String line = scan.nextLine();
                 String[] splitLine = line.split(":");
-                row[0] = splitLine[0];
-                row[1] = splitLine[1];
-                row[2] = splitLine[2];
-                if (parseInt(String.valueOf(row[1])) != 0) {
-                    model.addRow(row);
+                columns[0] = splitLine[0];
+                columns[1] = splitLine[1];
+                columns[2] = splitLine[2];
+                if (parseInt(String.valueOf(columns[1])) != 0) {
+                    model.addRow(columns);
                 } 
             }
         }catch (IOException e) {
@@ -39,36 +43,39 @@ public class Shop {
 
     }
     public static void addToCart(DefaultTableModel model , JTable table , int userSelectedQty , int shopItemQty) {        
-        
-        String selectedItemName = model.getValueAt(table.getSelectedRow(), 0).toString();
-        double selectedItemPrice = Double.parseDouble(model.getValueAt(table.getSelectedRow(), 2).toString()); 
+        String selectedItemName = table.getValueAt(table.getSelectedRow(), 0).toString();
+        double selectedItemPrice = Double.parseDouble(table.getValueAt(table.getSelectedRow(), 2).toString()); 
         int row = table.getSelectedRow();
         
         // first update quantity in shopItemTable on client
-        table.setValueAt(shopItemQty - userSelectedQty, row, 1);
+        table.setValueAt(shopItemQty - userSelectedQty, row, 1);  // needed for updateCart() not updateInventory()
         // then update the Inventory by copying the updated Shop(client) onto the inventory database file
-        updateInventory(model  , table);
+        updateInventory(selectedItemName , shopItemQty , userSelectedQty);
         // update the cart
         updateCart(selectedItemName ,userSelectedQty, selectedItemPrice , model , table);
     }
-    
-    public static void updateInventory(DefaultTableModel model , JTable table) {
+    public static void updateInventory(String name , int shopItemQty , int userSelectedQty) {
+        System.out.println("UPDATING " + name);
+        int inventoryRows = UtilFuncs.getNumberOfRowsInFile("database/inventory.txt");
+        String[][] inventoryArr = UtilFuncs.getFileRowsContent("database/inventory.txt", inventoryRows);
         UtilFuncs.emptyAFile("database/inventory.txt");
+        for (int i = 0; i < inventoryArr.length; i++) {
+            if (inventoryArr[i][0].toLowerCase().equals(name.toLowerCase())) {
+                inventoryArr[i][1] = String.valueOf((shopItemQty - userSelectedQty));
+            }
+        }
         
         try {
-            FileWriter inventoryFile = new FileWriter("database/inventory.txt" , true);
-            for (int i = 0; i < table.getRowCount(); i++) {
-                String name = model.getValueAt(i, 0).toString();
-                int qty = parseInt(model.getValueAt(i, 1).toString());
-                double price = Double.parseDouble(model.getValueAt(i, 2).toString());
-                inventoryFile.append(name+":"+qty+":"+price+"\r\n");
+            FileWriter file = new FileWriter("database/inventory.txt" , true);
+            for (int i = 0; i < inventoryArr.length; i++) {
+                file.append(inventoryArr[i][0]+":"+inventoryArr[i][1]+":"+inventoryArr[i][2]+"\r\n");
             }
-            inventoryFile.close();
+            file.close();
         } catch(IOException e) {
-            System.out.println("Cannot Write to inventory");
+            System.out.println("error writing to inventory");
         }
     }
-    
+   
     public static void updateCart(String name , int qty , double price , DefaultTableModel model , JTable table) {
         File cartFile;
         boolean itemAlreadyExists = false;
@@ -164,6 +171,13 @@ public class Shop {
         } catch(IOException e) {
             System.out.println("Cannot read from cart");
         }
+    }
+    
+    public static void searchItem(DefaultTableModel model , JTable table , String textToMatch) {
+        TableRowSorter sorter = new TableRowSorter(model);
+        sorter.setRowFilter(RowFilter.regexFilter(textToMatch));
+        table.setModel(model);
+        table.setRowSorter(sorter);
     }
 
 }

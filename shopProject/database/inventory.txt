@@ -1,3 +1,6 @@
-apples:50:1.0
-bananas:500:2.25
-Rolex Watch(Small):30:50.0
+apples:50:1
+jelly:50:1
+rolex:50:1
+laptop:50:1
+phone:50:1
+samsung:50:1

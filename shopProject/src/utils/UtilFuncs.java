@@ -6,7 +6,12 @@ import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
+/*
+    This Class is to make it easy to do file IO tasks that are repeated throughout the programme
+*/
+
 public class UtilFuncs {
+    // need  to pass file path as parameter. returns number of rows in a txt file.
     public static int getNumberOfRowsInFile(String f) {
         int currentRows = 0;
         try {
@@ -23,7 +28,7 @@ public class UtilFuncs {
         }
     }
     
-    // must have name:qty:price formate
+    // must have name:qty:price format
     public static String[][] getFileRowsContent(String f , int sizeOfArr) {
         String[][] arr = new String[sizeOfArr][3];
         try {
@@ -45,6 +50,7 @@ public class UtilFuncs {
         }
         
     }
+    // neeed to pass a file path. empties a file
     public static void emptyAFile(String f) {
         try {
             FileWriter myFile = new FileWriter(f);

@@ -9,7 +9,9 @@ package shopproject;
 import static java.lang.Integer.parseInt;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import user.Account;
 import user.Cart;
 import user.Shop;
@@ -75,8 +77,14 @@ public class gui extends javax.swing.JFrame {
         shopItemBoxQtyField = new javax.swing.JTextField();
         shopItemBoxAddToCartBtn = new javax.swing.JButton();
         shopItemBoxCancelBtn = new javax.swing.JButton();
+        shopEnterItemLabell = new javax.swing.JLabel();
+        shopSearchBar = new javax.swing.JTextField();
         adminTabPanel = new javax.swing.JPanel();
         adminTabSidePanel = new javax.swing.JPanel();
+        AdminTabInventoryPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        AdminTabAccountPanel = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -367,11 +375,16 @@ public class gui extends javax.swing.JFrame {
         userTabPanel.add(userTabCartPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 0, 950, -1));
 
         userTabShopPanel.setBackground(new java.awt.Color(204, 204, 204));
+        userTabShopPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userTabShopPanelMouseClicked(evt);
+            }
+        });
 
-        Heading.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        Heading.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         Heading.setForeground(new java.awt.Color(0, 0, 0));
         Heading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Heading.setText("Select the item you want to buy and click on the \"buy\" button to Purchase.");
+        Heading.setText("Select an item OR search for the item in the searchbar below");
 
         shopItemsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -460,16 +473,22 @@ public class gui extends javax.swing.JFrame {
                 .addContainerGap(109, Short.MAX_VALUE))
         );
 
+        shopEnterItemLabell.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        shopEnterItemLabell.setForeground(new java.awt.Color(0, 0, 0));
+        shopEnterItemLabell.setText("Enter Items to search:");
+
+        shopSearchBar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                shopSearchBarKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout userTabShopPanelLayout = new javax.swing.GroupLayout(userTabShopPanel);
         userTabShopPanel.setLayout(userTabShopPanelLayout);
         userTabShopPanelLayout.setHorizontalGroup(
             userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userTabShopPanelLayout.createSequentialGroup()
-                .addGap(186, 186, 186)
-                .addComponent(Heading, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(70, Short.MAX_VALUE)
                 .addGroup(userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
                         .addComponent(shopBuyItemBtn)
@@ -477,6 +496,17 @@ public class gui extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
                         .addComponent(shopTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67))))
+            .addGroup(userTabShopPanelLayout.createSequentialGroup()
+                .addGroup(userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(userTabShopPanelLayout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addComponent(Heading, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(userTabShopPanelLayout.createSequentialGroup()
+                        .addGap(211, 211, 211)
+                        .addComponent(shopEnterItemLabell)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(shopSearchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
                     .addContainerGap(154, Short.MAX_VALUE)
@@ -486,13 +516,16 @@ public class gui extends javax.swing.JFrame {
         userTabShopPanelLayout.setVerticalGroup(
             userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userTabShopPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(Heading, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(shopEnterItemLabell, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addComponent(shopSearchBar))
+                .addGap(18, 18, 18)
                 .addComponent(shopTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(shopBuyItemBtn)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
             .addGroup(userTabShopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTabShopPanelLayout.createSequentialGroup()
                     .addContainerGap(130, Short.MAX_VALUE)
@@ -520,6 +553,48 @@ public class gui extends javax.swing.JFrame {
         );
 
         adminTabPanel.add(adminTabSidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, -1));
+
+        jLabel2.setText("Inventory");
+
+        javax.swing.GroupLayout AdminTabInventoryPanelLayout = new javax.swing.GroupLayout(AdminTabInventoryPanel);
+        AdminTabInventoryPanel.setLayout(AdminTabInventoryPanelLayout);
+        AdminTabInventoryPanelLayout.setHorizontalGroup(
+            AdminTabInventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AdminTabInventoryPanelLayout.createSequentialGroup()
+                .addGap(424, 424, 424)
+                .addComponent(jLabel2)
+                .addContainerGap(471, Short.MAX_VALUE))
+        );
+        AdminTabInventoryPanelLayout.setVerticalGroup(
+            AdminTabInventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AdminTabInventoryPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(553, Short.MAX_VALUE))
+        );
+
+        adminTabPanel.add(AdminTabInventoryPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 0, 940, -1));
+
+        jLabel3.setText("Account");
+
+        javax.swing.GroupLayout AdminTabAccountPanelLayout = new javax.swing.GroupLayout(AdminTabAccountPanel);
+        AdminTabAccountPanel.setLayout(AdminTabAccountPanelLayout);
+        AdminTabAccountPanelLayout.setHorizontalGroup(
+            AdminTabAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AdminTabAccountPanelLayout.createSequentialGroup()
+                .addGap(425, 425, 425)
+                .addComponent(jLabel3)
+                .addContainerGap(484, Short.MAX_VALUE))
+        );
+        AdminTabAccountPanelLayout.setVerticalGroup(
+            AdminTabAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AdminTabAccountPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(553, Short.MAX_VALUE))
+        );
+
+        adminTabPanel.add(AdminTabAccountPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 950, 580));
 
         MainTabbedPane.addTab("Admin Tab", adminTabPanel);
 
@@ -599,6 +674,10 @@ public class gui extends javax.swing.JFrame {
             this.shopBuyItemBox.setVisible(false);
             this.shopTableScrollPane.setVisible(true);
             this.shopBuyItemBtn.setVisible(true);
+            
+            // searchbar should appear
+            this.shopSearchBar.setVisible(true);
+            this.shopEnterItemLabell.setVisible(true);
 
             // load items
             DefaultTableModel model =  (DefaultTableModel)this.shopItemsTable.getModel();
@@ -616,6 +695,8 @@ public class gui extends javax.swing.JFrame {
             this.shopTableScrollPane.setVisible(false);
             this.shopBuyItemBox.setVisible(true);
             this.shopBuyItemBtn.setVisible(false);
+            this.shopSearchBar.setVisible(false);
+            this.shopEnterItemLabell.setVisible(false);
             
             DefaultTableModel model =  (DefaultTableModel)this.shopItemsTable.getModel();
             int selectedRow = this.shopItemsTable.getSelectedRow();
@@ -651,14 +732,16 @@ public class gui extends javax.swing.JFrame {
             if (userSelectedQty > shopItemQty) {
                 JOptionPane.showMessageDialog(null, "Sorry only " + shopItemQty + " " + shopItemName + "s remaining");
             } else {
-                
+                model =  (DefaultTableModel)this.shopItemsTable.getModel();
+                  table = this.shopItemsTable;
                 Shop.addToCart(model , table , userSelectedQty , shopItemQty);
                 this.shopBuyItemBox.setVisible(false);
                 this.shopTableScrollPane.setVisible(true);
                 this.shopBuyItemBtn.setVisible(true);
+                this.shopSearchBar.setVisible(true);
+                this.shopEnterItemLabell.setVisible(true);
                 // load shop again since the qty in inventory is updated
-                DefaultTableModel model2 =  (DefaultTableModel)this.shopItemsTable.getModel(); // updated model ?
-                Shop.loadItems(model2);
+                Shop.loadItems(model);
             }
         }
         
@@ -693,6 +776,22 @@ public class gui extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "There are no items in the cart");
         }
     }//GEN-LAST:event_userCartCheckoutBtnActionPerformed
+
+    private void userTabShopPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTabShopPanelMouseClicked
+        // TODO add your handling code here:
+        // leavee empty
+    }//GEN-LAST:event_userTabShopPanelMouseClicked
+
+    private void shopSearchBarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_shopSearchBarKeyReleased
+        // TODO add your handling code here:
+        DefaultTableModel model =  (DefaultTableModel)this.shopItemsTable.getModel(); 
+        
+        TableRowSorter sorter = new TableRowSorter(model);
+        sorter.setRowFilter(RowFilter.regexFilter(this.shopSearchBar.getText()));
+        this.shopItemsTable.setModel(model);
+        this.shopItemsTable.setRowSorter(sorter);
+//        Shop.searchItem(model , this.shopItemsTable);
+    }//GEN-LAST:event_shopSearchBarKeyReleased
     
     // USER ACTION FUNCTON END
     
@@ -737,20 +836,26 @@ public class gui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AdminTabAccountPanel;
+    private javax.swing.JPanel AdminTabInventoryPanel;
     private javax.swing.JLabel Heading;
     private javax.swing.JTabbedPane MainTabbedPane;
     private javax.swing.JButton UserTabCartBtn;
     private javax.swing.JPanel adminTabPanel;
     private javax.swing.JPanel adminTabSidePanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel shopBuyItemBox;
     private javax.swing.JButton shopBuyItemBtn;
+    private javax.swing.JLabel shopEnterItemLabell;
     private javax.swing.JButton shopItemBoxAddToCartBtn;
     private javax.swing.JButton shopItemBoxCancelBtn;
     private javax.swing.JLabel shopItemBoxLabel2;
     private javax.swing.JTextField shopItemBoxQtyField;
     private javax.swing.JTable shopItemsTable;
+    private javax.swing.JTextField shopSearchBar;
     private javax.swing.JScrollPane shopTableScrollPane;
     private javax.swing.JButton userCartCheckoutBtn;
     private javax.swing.JButton userCartClearCartBtn;
