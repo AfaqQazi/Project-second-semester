@@ -6,7 +6,9 @@
 package shopproject;
 
 // User imports Afaq
+import java.io.IOException;
 import static java.lang.Integer.parseInt;
+import java.util.regex.PatternSyntaxException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
@@ -785,9 +787,16 @@ public class gui extends javax.swing.JFrame {
     private void shopSearchBarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_shopSearchBarKeyReleased
         // TODO add your handling code here:
         DefaultTableModel model =  (DefaultTableModel)this.shopItemsTable.getModel(); 
+        Shop.loadItems(model);
         
         TableRowSorter sorter = new TableRowSorter(model);
-        sorter.setRowFilter(RowFilter.regexFilter(this.shopSearchBar.getText() , 0));
+        String searchedText = this.shopSearchBar.getText().toLowerCase();
+        try {
+            sorter.setRowFilter(RowFilter.regexFilter(searchedText , 0));
+        } catch(PatternSyntaxException p) {
+            model.setRowCount(0);
+        }
+        
         this.shopItemsTable.setModel(model);
         this.shopItemsTable.setRowSorter(sorter);
     }//GEN-LAST:event_shopSearchBarKeyReleased
