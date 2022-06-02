@@ -6,6 +6,7 @@
 package shopproject;
 
 // User imports Afaq
+import admin.AdminAccount;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.util.regex.PatternSyntaxException;
@@ -19,6 +20,9 @@ import user.Cart;
 import user.Shop;
 import user.User;
 
+
+// Admin Imports Taimoor
+import admin.Admin;
 /**
  *
  * @author Afaq Qazi Taimoor Pervaiz
@@ -83,10 +87,20 @@ public class gui extends javax.swing.JFrame {
         shopSearchBar = new javax.swing.JTextField();
         adminTabPanel = new javax.swing.JPanel();
         adminTabSidePanel = new javax.swing.JPanel();
+        AdminAccountBtn = new javax.swing.JButton();
+        AdminAccountInventoryBtn = new javax.swing.JButton();
         AdminTabInventoryPanel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        AdminTabAccountPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        AdminTabAccountPanel = new javax.swing.JPanel();
+        adminFormPanel = new javax.swing.JPanel();
+        AdminAccountLabel = new javax.swing.JLabel();
+        AdminAccountUsername = new javax.swing.JLabel();
+        AdminAccountUsernameTextField = new javax.swing.JTextField();
+        AdminAccountPassword = new javax.swing.JLabel();
+        AdminAccountPasswordField = new javax.swing.JPasswordField();
+        AdminAccountRegisterBtn = new javax.swing.JButton();
+        AdminAccountLoginBtn = new javax.swing.JButton();
+        AdminAccountLogoutBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -257,7 +271,7 @@ public class gui extends javax.swing.JFrame {
                     .addComponent(userFormIncorrectError, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addComponent(userFormRegisteredMsg)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
             .addGroup(userFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userFormPanelLayout.createSequentialGroup()
                     .addContainerGap(292, Short.MAX_VALUE)
@@ -327,12 +341,10 @@ public class gui extends javax.swing.JFrame {
 
         userCartHeading.setBackground(new java.awt.Color(0, 0, 0));
         userCartHeading.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        userCartHeading.setForeground(new java.awt.Color(0, 0, 0));
         userCartHeading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userCartHeading.setText("USER CART");
 
         userCartTotalLabel.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        userCartTotalLabel.setForeground(new java.awt.Color(0, 0, 0));
         userCartTotalLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userCartTotalLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
@@ -384,7 +396,6 @@ public class gui extends javax.swing.JFrame {
         });
 
         Heading.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Heading.setForeground(new java.awt.Color(0, 0, 0));
         Heading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Heading.setText("Select an item OR search for the item in the searchbar below");
 
@@ -476,7 +487,6 @@ public class gui extends javax.swing.JFrame {
         );
 
         shopEnterItemLabell.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        shopEnterItemLabell.setForeground(new java.awt.Color(0, 0, 0));
         shopEnterItemLabell.setText("Enter Items to search:");
 
         shopSearchBar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -543,57 +553,159 @@ public class gui extends javax.swing.JFrame {
 
         adminTabSidePanel.setBackground(new java.awt.Color(153, 153, 153));
 
+        AdminAccountBtn.setText("Account");
+        AdminAccountBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdminAccountBtnActionPerformed(evt);
+            }
+        });
+
+        AdminAccountInventoryBtn.setText("Inventory");
+
         javax.swing.GroupLayout adminTabSidePanelLayout = new javax.swing.GroupLayout(adminTabSidePanel);
         adminTabSidePanel.setLayout(adminTabSidePanelLayout);
         adminTabSidePanelLayout.setHorizontalGroup(
             adminTabSidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(adminTabSidePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(adminTabSidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(AdminAccountBtn)
+                    .addComponent(AdminAccountInventoryBtn))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         adminTabSidePanelLayout.setVerticalGroup(
             adminTabSidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGroup(adminTabSidePanelLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(AdminAccountBtn)
+                .addGap(43, 43, 43)
+                .addComponent(AdminAccountInventoryBtn)
+                .addContainerGap(448, Short.MAX_VALUE))
         );
 
         adminTabPanel.add(adminTabSidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, -1));
 
-        jLabel2.setText("Inventory");
+        jLabel3.setText("laude");
 
         javax.swing.GroupLayout AdminTabInventoryPanelLayout = new javax.swing.GroupLayout(AdminTabInventoryPanel);
         AdminTabInventoryPanel.setLayout(AdminTabInventoryPanelLayout);
         AdminTabInventoryPanelLayout.setHorizontalGroup(
             AdminTabInventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdminTabInventoryPanelLayout.createSequentialGroup()
-                .addGap(424, 424, 424)
-                .addComponent(jLabel2)
-                .addContainerGap(471, Short.MAX_VALUE))
+                .addGap(464, 464, 464)
+                .addComponent(jLabel3)
+                .addContainerGap(464, Short.MAX_VALUE))
         );
         AdminTabInventoryPanelLayout.setVerticalGroup(
             AdminTabInventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdminTabInventoryPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addContainerGap(553, Short.MAX_VALUE))
+                .addGap(275, 275, 275)
+                .addComponent(jLabel3)
+                .addContainerGap(275, Short.MAX_VALUE))
         );
 
         adminTabPanel.add(AdminTabInventoryPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 0, 940, -1));
 
-        jLabel3.setText("Account");
+        AdminAccountLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        AdminAccountLabel.setText("Enter Login Details here");
+
+        AdminAccountUsername.setText("Username");
+
+        AdminAccountPassword.setText("Password");
+
+        AdminAccountRegisterBtn.setText("Register");
+        AdminAccountRegisterBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdminAccountRegisterBtnActionPerformed(evt);
+            }
+        });
+
+        AdminAccountLoginBtn.setText("Login");
+        AdminAccountLoginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdminAccountLoginBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout adminFormPanelLayout = new javax.swing.GroupLayout(adminFormPanel);
+        adminFormPanel.setLayout(adminFormPanelLayout);
+        adminFormPanelLayout.setHorizontalGroup(
+            adminFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminFormPanelLayout.createSequentialGroup()
+                .addContainerGap(146, Short.MAX_VALUE)
+                .addComponent(AdminAccountRegisterBtn)
+                .addGap(71, 71, 71)
+                .addComponent(AdminAccountLoginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(210, 210, 210))
+            .addGroup(adminFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(adminFormPanelLayout.createSequentialGroup()
+                    .addGap(100, 100, 100)
+                    .addGroup(adminFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(adminFormPanelLayout.createSequentialGroup()
+                            .addGroup(adminFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(AdminAccountUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(AdminAccountPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(adminFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(AdminAccountUsernameTextField)
+                                .addComponent(AdminAccountPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(adminFormPanelLayout.createSequentialGroup()
+                            .addGap(125, 125, 125)
+                            .addComponent(AdminAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(101, Short.MAX_VALUE)))
+        );
+        adminFormPanelLayout.setVerticalGroup(
+            adminFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminFormPanelLayout.createSequentialGroup()
+                .addContainerGap(206, Short.MAX_VALUE)
+                .addGroup(adminFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AdminAccountLoginBtn)
+                    .addComponent(AdminAccountRegisterBtn))
+                .addGap(111, 111, 111))
+            .addGroup(adminFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(adminFormPanelLayout.createSequentialGroup()
+                    .addGap(25, 25, 25)
+                    .addComponent(AdminAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(29, 29, 29)
+                    .addGroup(adminFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(AdminAccountUsername)
+                        .addComponent(AdminAccountUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(49, 49, 49)
+                    .addGroup(adminFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(AdminAccountPassword)
+                        .addComponent(AdminAccountPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(169, Short.MAX_VALUE)))
+        );
+
+        AdminAccountLogoutBtn.setText("Logout");
+        AdminAccountLogoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdminAccountLogoutBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout AdminTabAccountPanelLayout = new javax.swing.GroupLayout(AdminTabAccountPanel);
         AdminTabAccountPanel.setLayout(AdminTabAccountPanelLayout);
         AdminTabAccountPanelLayout.setHorizontalGroup(
             AdminTabAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdminTabAccountPanelLayout.createSequentialGroup()
-                .addGap(425, 425, 425)
-                .addComponent(jLabel3)
-                .addContainerGap(484, Short.MAX_VALUE))
+                .addGroup(AdminTabAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AdminTabAccountPanelLayout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(adminFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(AdminTabAccountPanelLayout.createSequentialGroup()
+                        .addGap(419, 419, 419)
+                        .addComponent(AdminAccountLogoutBtn)))
+                .addContainerGap(259, Short.MAX_VALUE))
         );
         AdminTabAccountPanelLayout.setVerticalGroup(
             AdminTabAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdminTabAccountPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap(553, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(adminFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(AdminAccountLogoutBtn)
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         adminTabPanel.add(AdminTabAccountPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 950, 580));
@@ -800,6 +912,43 @@ public class gui extends javax.swing.JFrame {
         this.shopItemsTable.setModel(model);
         this.shopItemsTable.setRowSorter(sorter);
     }//GEN-LAST:event_shopSearchBarKeyReleased
+
+    private void AdminAccountBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminAccountBtnActionPerformed
+        // TODO add your handling code here:
+        this.AdminTabAccountPanel.setVisible(true);
+        this.AdminTabInventoryPanel.setVisible(false);
+         AdminAccount.show(AdminTabAccountPanel, AdminAccountLogoutBtn);
+    }//GEN-LAST:event_AdminAccountBtnActionPerformed
+
+    private void AdminAccountRegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminAccountRegisterBtnActionPerformed
+        // TODO add your handling code here:
+        String username=this.AdminAccountUsernameTextField.getText();
+        String password=this.AdminAccountPasswordField.getText();
+               AdminAccount.RegisterAdmin(username, password);
+        
+    }//GEN-LAST:event_AdminAccountRegisterBtnActionPerformed
+
+    private void AdminAccountLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminAccountLoginBtnActionPerformed
+        // TODO add your handling code here:
+        String username=this.AdminAccountUsernameTextField.getText();
+        String password=this.AdminAccountPasswordField.getText();
+        AdminAccount.LoginButton(username,password);
+         Admin.setIsLoggedIn(true);
+         System.out.println(Admin.isIsLoggedIn());
+         AdminAccount.show(this.adminFormPanel, AdminAccountLogoutBtn);
+        
+        
+    }//GEN-LAST:event_AdminAccountLoginBtnActionPerformed
+
+    private void AdminAccountLogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminAccountLogoutBtnActionPerformed
+        // TODO add your handling code here:
+        Admin.setIsLoggedIn(false);
+                 System.out.println(Admin.isIsLoggedIn());
+
+        AdminAccount.show(this.adminFormPanel, AdminAccountLogoutBtn);
+        
+        
+    }//GEN-LAST:event_AdminAccountLogoutBtnActionPerformed
     
     // USER ACTION FUNCTON END
     
@@ -839,20 +988,36 @@ public class gui extends javax.swing.JFrame {
                 a.userTabAccountPanel.setVisible(false);
                 a.userTabCartPanel.setVisible(false);
                 a.userTabShopPanel.setVisible(false);
+                
+                // Admin/taimoor code
+                
+                a.AdminTabInventoryPanel.setVisible(false);
+                a.adminFormPanel.setVisible(true);
+                a.AdminAccountLogoutBtn.setVisible(false);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AdminAccountBtn;
+    private javax.swing.JButton AdminAccountInventoryBtn;
+    private javax.swing.JLabel AdminAccountLabel;
+    private javax.swing.JButton AdminAccountLoginBtn;
+    private javax.swing.JButton AdminAccountLogoutBtn;
+    private javax.swing.JLabel AdminAccountPassword;
+    private javax.swing.JPasswordField AdminAccountPasswordField;
+    private javax.swing.JButton AdminAccountRegisterBtn;
+    private javax.swing.JLabel AdminAccountUsername;
+    private javax.swing.JTextField AdminAccountUsernameTextField;
     private javax.swing.JPanel AdminTabAccountPanel;
     private javax.swing.JPanel AdminTabInventoryPanel;
     private javax.swing.JLabel Heading;
     private javax.swing.JTabbedPane MainTabbedPane;
     private javax.swing.JButton UserTabCartBtn;
+    private javax.swing.JPanel adminFormPanel;
     private javax.swing.JPanel adminTabPanel;
     private javax.swing.JPanel adminTabSidePanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel shopBuyItemBox;

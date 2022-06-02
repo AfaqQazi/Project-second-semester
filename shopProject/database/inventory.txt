@@ -2,5 +2,5 @@ apples:0:1
 jelly:50:1
 rolex:50:1
 laptop:50:1
-phone:50:1
+phone:0:1
 samsung:50:1

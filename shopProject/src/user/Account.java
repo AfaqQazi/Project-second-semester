@@ -126,5 +126,6 @@ public class Account {
     }
     public static void logoutUser(){
         User.setIsLoggedIn(false);
+        
     }
 }
