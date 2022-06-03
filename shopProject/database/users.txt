@@ -1,4 +1,0 @@
-a:a
-poiu:qwerty
-afaq:123
-123:1
