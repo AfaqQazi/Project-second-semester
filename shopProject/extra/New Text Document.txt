@@ -1,0 +1,47 @@
+ public static void searchItemInTable(String searchedName , JTable table , DefaultTableModel model) {
+        int inventoryRowsLength = utils.UtilFuncs.getNumberOfRowsInFile("database/inventory.txt");
+        String itemToOnlyShow = "";
+
+        try {
+            String onlyItemToShow = "";
+            File inventoryFile = new File("database/inventory.txt");
+            Scanner scan = new Scanner(inventoryFile);
+            while (scan.hasNextLine()) {
+               String line[] = scan.nextLine().split(":");
+               if (line[0].toLowerCase().contains(searchedName.toLowerCase())) {
+                   onlyItemToShow = line[0];
+               }
+               if (!onlyItemToShow.equals("")) {
+                   loadOnlySerchedItem(onlyItemToShow , table , model);
+               }
+            }
+            }catch (IOException e) {
+                System.out.println("Somethign  went wrong retrieving inventory");
+            }
+    }
+    
+    private static void loadOnlySerchedItem(String onlyItemToShow ,JTable tablee , DefaultTableModel model) {
+        // clear items
+        model.setRowCount(0);
+        // read  inventory file
+        try {
+            String[] columns;
+            File inventoryFile = new File("database/inventory.txt");
+            Scanner scan = new Scanner(inventoryFile);
+            while(scan.hasNextLine()) {
+                columns = new String[3];
+                String line = scan.nextLine();
+                String[] splitLine = line.split(":");
+                columns[0] = splitLine[0];
+                columns[1] = splitLine[1];
+                columns[2] = splitLine[2];
+                if (parseInt(String.valueOf(columns[1])) != 0) {
+                    if (columns[0].toLowerCase().equals(onlyItemToShow.toLowerCase())) {
+                        model.addRow(columns);
+                    }
+                } 
+            }
+        }catch (IOException e) {
+            System.out.println("Somethign  went wrong retrieving inventory");
+        }
+    }
